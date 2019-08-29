@@ -25,7 +25,11 @@ public class OrderPizzaController {
 
     @ModelAttribute(name = "design")
     public Order design() {
-        return new Order();
+        Order order = new Order();
+        List<Pizza> pizzas = new ArrayList<>();
+        pizzaRepo.findAll().forEach(pizzas::add);
+        order.setPizzas(pizzas);
+        return order;
     }
 
     @Autowired
@@ -39,19 +43,18 @@ public class OrderPizzaController {
         // заполняем данными из БД
         List<Pizza> pizzas = new ArrayList<>();
         pizzaRepo.findAll().forEach(pizzas::add);
-        model.addAttribute("pizzas", pizzas);
         return "design";
     }
 
     @PostMapping
-    public String processOrder(@Valid Pizza pizza, Errors errors,
-                               @ModelAttribute Order order) {
+    public String processOrder(
+                               @ModelAttribute Order order, Errors errors) {
         // если есть ошибки, возвращаемся на первоначальную форму
         if (errors.hasErrors()) {
             return "design";
         }
-        Pizza saved = pizzaRepo.save(pizza);
-        order.addPizza(saved);
+//        Pizza saved = pizzaRepo.save(pizza);
+//        order.addPizza(saved);
 
         log.info("редиректим на страницу с текущим заказом");
         return "redirect:/orders/current";

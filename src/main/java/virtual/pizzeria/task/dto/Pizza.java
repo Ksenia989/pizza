@@ -16,23 +16,33 @@ import javax.validation.constraints.Size;
  * Класс, представляющий собой пиццу
  */
 @Data
-@RequiredArgsConstructor
-@NoArgsConstructor(access=AccessLevel.PRIVATE, force=true)
 @Entity
 public class Pizza {
     @Id
-    private final String id;
+    private String id;
 
     /**
      * название пиццы
      */
     @NotNull
     @Size(min = 1, message = "Вы должны указать название пиццы")
-    private final String name;
+    private String name;
 
     /**
      * цена пиццы
      */
     @NotNull
-    private final Double price;
+    private Double price;
+
+    private boolean active;
+
+    public Pizza() {
+    }
+
+    public Pizza(String id, @NotNull @Size(min = 1, message = "Вы должны указать название пиццы") String name, @NotNull Double price, boolean active) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.active = active;
+    }
 }

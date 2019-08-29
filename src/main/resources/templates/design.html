@@ -16,9 +16,12 @@
           th:errors="*{pizzas}">Pizza Error</span>
 
     <div class="grid">
-        <div class="ingredient-group" id="pizzas">
-            <div th:each="pizza : ${pizzas}">
-                <input name="pizzas" type="checkbox" th:value="${pizza.id}"/>
+        <div class="ingredient-group">
+            <div th:each="pizza,stat : *{pizzas}">
+                <input type="checkbox" th:field="*{pizzas[__${stat.index}__].active}" th:value="${pizza.active}"/>
+                <input type="hidden" th:field="*{pizzas[__${stat.index}__].id}" th:value="${pizza.id}" />
+                <input type="hidden" th:field="*{pizzas[__${stat.index}__].name}" th:value="${pizza.name}" />
+                <input type="hidden" th:field="*{pizzas[__${stat.index}__].price}" th:value="${pizza.price}" />
                 <span th:text="${pizza.name}">INGREDIENT</span><br/>
                 <!--  цена -->
                 <span th:text="${pizza.price + '₽'}"></span><br/>
@@ -28,7 +31,7 @@
         </div>
     </div>
 
-    <input name="date" type="datetime-local" th:field="*{deliveryDate}"/><h6>Дата доставки</h6><br/>
+<!--    <input name="date" type="datetime-local" th:field="*{deliveryDate}"/><h6>Дата доставки</h6><br/>-->
     <input name="name" type="text" th:field="*{customerName}" th:placeholder="${'Ваше имя'}"/><br/>
     <input name="address" type="text" th:field="*{deliveryAddress}" th:placeholder="${'Адрес доставки'}"/><br/>
     <div th:field="*{selectedPaymentMethod}">
