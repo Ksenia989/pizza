@@ -16,7 +16,7 @@ import java.util.List;
  * Класс для данных о заказе (с фронта)
  */
 @Data
-@Table(name = "order")
+@Table(name = "Orders")
 @Entity
 public class Order implements Serializable {
     private static final long serialVersionUID = 1L;
