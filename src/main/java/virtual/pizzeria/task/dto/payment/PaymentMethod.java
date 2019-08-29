@@ -1,4 +1,4 @@
-package virtual.pizzeria.task;
+package virtual.pizzeria.task.dto.payment;
 
 /**
  * enum для методов оплаты

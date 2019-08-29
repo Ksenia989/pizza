@@ -9,18 +9,16 @@
 <body>
 <h1>Вас приветствует пиццерия!</h1>
 <h2>Выберите пиццы, которые вам по душе!</h2>
-<!--    <img th:src="@{/images/TacoCloud.png}"/>-->
 <form method="POST" th:object="${design}">
 
     <span class="validationError"
           th:if="${#fields.hasErrors('pizzas')}"
-          th:errors="*{pizzas}">Ingredient Error</span>
+          th:errors="*{pizzas}">Pizza Error</span>
 
     <div class="grid">
         <div class="ingredient-group" id="pizzas">
-            <h3>Выберите пиццы:</h3>
             <div th:each="pizza : ${pizzas}">
-                <input name="pizzas" type="checkbox" th:value="${pizza.name}"/>
+                <input name="pizzas" type="checkbox" th:value="${pizza.id}"/>
                 <span th:text="${pizza.name}">INGREDIENT</span><br/>
                 <!--  цена -->
                 <span th:text="${pizza.price + '₽'}"></span><br/>
@@ -30,38 +28,15 @@
         </div>
     </div>
 
-    <div class="grid">
-        <div class="ingredient-group" id="pizzasCombo">
-            <h3>Выберите комбо:</h3>
-            <div th:each="combo : ${pizzasCombo}">
-                <input name="ingredients" type="checkbox" th:value="${combo.name}"/>
-                <span th:text="${combo.name}">INGREDIENT</span><br/>
-                <!--  цена -->
-                <span th:text="${combo.price + '₽'}"></span><br/>
-                <!-- Выбираем изображение пиццы по его id -->
-                <img th:src="${'/images/combo/' + combo.name + '.PNG'}"/>
-            </div>
-        </div>
+    <input name="date" type="datetime-local" th:field="*{deliveryDate}"/><h6>Дата доставки</h6><br/>
+    <input name="name" type="text" th:field="*{customerName}" th:placeholder="${'Ваше имя'}"/><br/>
+    <input name="address" type="text" th:field="*{deliveryAddress}" th:placeholder="${'Адрес доставки'}"/><br/>
+    <div th:field="*{selectedPaymentMethod}">
+        <p><input name="payment method" type="radio" checked/>Наличными</p>
+        <p><input name="payment method" type="radio"/>Картой при получении</p>
+        <p><input name="payment method" type="radio"/>Банковской картой онлайн (редирект -> сторонний сайт)</p>
     </div>
-
     <div>
-        <!--        <h3>Name your taco creation:</h3>-->
-        <!--        <input type="text" th:field="*{name}"/>-->
-        <!--        <span th:text="${#fields.hasErrors('name')}">XXX</span>-->
-        <!--        <span class="validationError"-->
-        <!--              th:if="${#fields.hasErrors('name')}"-->
-        <!--              th:errors="*{name}">Name Error</span>-->
-        <!--        <br/>-->
-        <input name="date" type="datetime-local" th:text="Выберите время доставки"/>
-        <input name="name" type="text" th:text="Ваше имя или того, кому вы заказываете"/>
-        <input name="address" type="text" th:text="Адрес"/>
-        <div>
-        <input name="payment mehod" type="radio" th:text="Наличными"/>
-        <input name="payment mehod" type="radio" th:text="Картой при получении"/>
-        <input name="payment mehod" type="radio"
-               th:text="Банковской картой онлайн (редирект -> сторонний сайт)"/>
-        </div>
-
         <button>Заказать</button>
     </div>
 </form>
