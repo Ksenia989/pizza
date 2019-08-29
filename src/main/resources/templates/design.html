@@ -1,52 +1,69 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-  <head>
+<head>
     <title>Taco Cloud</title>
-    <link rel="stylesheet" th:href="@{/styles.css}" />
-  </head>
+    <link rel="stylesheet" th:href="@{/styles.css}"/>
+</head>
 
-  <body>
-    <h1>Вас приветствует пиццерия!</h1>
-    <h2>Выберите пиццы, которые вам по душе!</h2>
+<body>
+<h1>Вас приветствует пиццерия!</h1>
+<h2>Выберите пиццы, которые вам по душе!</h2>
 <!--    <img th:src="@{/images/TacoCloud.png}"/>-->
-    <form method="POST" th:object="${design}">
+<form method="POST" th:object="${design}">
 
     <span class="validationError"
           th:if="${#fields.hasErrors('pizzas')}"
           th:errors="*{pizzas}">Ingredient Error</span>
 
     <div class="grid">
-      <div class="ingredient-group" id="pizzas">
-      <h3>Выберите пиццы:</h3>
-      <div th:each="ingredient : ${pizzas}">
-        <input name="ingredients" type="checkbox" th:value="${ingredient.name}" />
-        <span th:text="${ingredient.name}">INGREDIENT</span><br/>
-      </div>
-      </div>
-      </div>
-
-      <div class="grid">
-        <div class="ingredient-group" id="pizzasCombo">
-          <h3>Выберите комбо:</h3>
-          <div th:each="combo : ${pizzasCombo}">
-            <input name="ingredients" type="checkbox" th:value="${combo.name}" />
-            <span th:text="${combo.name}">INGREDIENT</span><br/>
-          </div>
+        <div class="ingredient-group" id="pizzas">
+            <h3>Выберите пиццы:</h3>
+            <div th:each="pizza : ${pizzas}">
+                <input name="pizzas" type="checkbox" th:value="${pizza.name}"/>
+                <span th:text="${pizza.name}">INGREDIENT</span><br/>
+                <!--  цена -->
+                <span th:text="${pizza.price + '₽'}"></span><br/>
+                <!-- Выбираем изображение пиццы по его id -->
+                <img th:src="${'/images/pizza/' + pizza.name + '.PNG'}"/>
+            </div>
         </div>
-      </div>
+    </div>
 
-      <div>
-      <h3>Name your taco creation:</h3>
-      <input type="text" th:field="*{name}"/>
-      <span th:text="${#fields.hasErrors('name')}">XXX</span>
-      <span class="validationError"
-            th:if="${#fields.hasErrors('name')}"
-            th:errors="*{name}">Name Error</span>
-      <br/>
+    <div class="grid">
+        <div class="ingredient-group" id="pizzasCombo">
+            <h3>Выберите комбо:</h3>
+            <div th:each="combo : ${pizzasCombo}">
+                <input name="ingredients" type="checkbox" th:value="${combo.name}"/>
+                <span th:text="${combo.name}">INGREDIENT</span><br/>
+                <!--  цена -->
+                <span th:text="${combo.price + '₽'}"></span><br/>
+                <!-- Выбираем изображение пиццы по его id -->
+                <img th:src="${'/images/combo/' + combo.name + '.PNG'}"/>
+            </div>
+        </div>
+    </div>
 
-      <button>Заказать</button>
-      </div>
-    </form>
-  </body>
+    <div>
+        <!--        <h3>Name your taco creation:</h3>-->
+        <!--        <input type="text" th:field="*{name}"/>-->
+        <!--        <span th:text="${#fields.hasErrors('name')}">XXX</span>-->
+        <!--        <span class="validationError"-->
+        <!--              th:if="${#fields.hasErrors('name')}"-->
+        <!--              th:errors="*{name}">Name Error</span>-->
+        <!--        <br/>-->
+        <input name="date" type="datetime-local" th:text="Выберите время доставки"/>
+        <input name="name" type="text" th:text="Ваше имя или того, кому вы заказываете"/>
+        <input name="address" type="text" th:text="Адрес"/>
+        <div>
+        <input name="payment mehod" type="radio" th:text="Наличными"/>
+        <input name="payment mehod" type="radio" th:text="Картой при получении"/>
+        <input name="payment mehod" type="radio"
+               th:text="Банковской картой онлайн (редирект -> сторонний сайт)"/>
+        </div>
+
+        <button>Заказать</button>
+    </div>
+</form>
+</body>
 </html>
