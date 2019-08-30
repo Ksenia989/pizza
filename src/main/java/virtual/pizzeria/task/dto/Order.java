@@ -35,7 +35,7 @@ public class Order implements Serializable {
     /**
      * пиццы в заказе
      */
-    @ManyToMany(targetEntity = Pizza.class)
+    @OneToMany(targetEntity = Pizza.class)
     @NotNull
     @Size(min = 1, message = "В заказе должна быть как минимум одна пицца")
     private List<Pizza> pizzas = new ArrayList<>();
@@ -64,6 +64,7 @@ public class Order implements Serializable {
     @NotBlank(message = "Имя пользователя обязательно")
     @Length(min = 1, message = "Вы должны указать имя пользователя")
     public String customerName;
+
     /**
      * адрес доставки
      */
@@ -81,6 +82,11 @@ public class Order implements Serializable {
      * статус заказа. Изначально - получен
      */
     public OrderStatus status;
+
+    /**
+     * Количество пицц в заказе
+     */
+    public int countPizzas;
 
     public void addPizza(Pizza pizza) {
         this.pizzas.add(pizza);

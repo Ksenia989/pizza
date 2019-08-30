@@ -18,7 +18,8 @@
     <div class="grid">
         <div class="ingredient-group">
             <div th:each="pizza,stat : *{pizzas}">
-                <input type="checkbox" th:field="*{pizzas[__${stat.index}__].active}" th:value="${pizza.active}"/>
+                <input type="checkbox" name="ids" th:value="${pizza.id}"/>
+                <input type="number" th:field="*{pizzas[__${stat.index}__].count}" th:value="${pizza.count}">
                 <input type="hidden" th:field="*{pizzas[__${stat.index}__].id}" th:value="${pizza.id}"/>
                 <input type="hidden" th:field="*{pizzas[__${stat.index}__].name}" th:value="${pizza.name}"/>
                 <input type="hidden" th:field="*{pizzas[__${stat.index}__].price}" th:value="${pizza.price}"/>

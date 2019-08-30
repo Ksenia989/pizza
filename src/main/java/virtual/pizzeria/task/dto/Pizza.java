@@ -1,7 +1,6 @@
 package virtual.pizzeria.task.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -13,15 +12,18 @@ import javax.validation.constraints.Size;
  */
 @Data
 @Entity
-@AllArgsConstructor
+@RequiredArgsConstructor
+@NoArgsConstructor
 public class Pizza {
     @Id
-    private String id;
+    @NonNull
+    private long id;
 
     /**
      * название пиццы
      */
     @NotNull
+    @NonNull
     @Size(min = 1, message = "Вы должны указать название пиццы")
     private String name;
 
@@ -29,10 +31,8 @@ public class Pizza {
      * цена пиццы
      */
     @NotNull
+    @NonNull
     private Double price;
 
-    private boolean active;
-
-    public Pizza() {
-    }
+    private transient int count = 0;
 }

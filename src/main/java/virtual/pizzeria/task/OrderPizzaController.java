@@ -1,6 +1,7 @@
 package virtual.pizzeria.task;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +17,7 @@ import virtual.pizzeria.task.dto.Pizza;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Controller
@@ -50,27 +52,22 @@ public class OrderPizzaController {
      * Метод при возвращении объекта заказа
      */
     @PostMapping
-    public String processOrder(@ModelAttribute Order order, Errors errors) {
+    public String processOrder(@ModelAttribute Order order,
+                               long[] ids,
+                               Errors errors) {
         // если есть ошибки в order, возвращаемся на первоначальную форму
         if (errors.hasErrors()) {
             log.warn("Есть ошибки на форме. Редирект обратно на нее");
             return "design";
         }
+
+        order.setPizzas(order.getPizzas().stream().filter(pizza -> ArrayUtils.contains(ids, pizza.getId())).collect(Collectors.toList()));
+        order.setPaymentSum(order.getPizzas().stream().mapToDouble(pizza -> pizza.getPrice() * pizza.getCount()).sum());
+        order.setCountPizzas(order.getPizzas().stream().mapToInt(Pizza::getCount).sum());
         // сохраняем объект заказа в БД
-        order.setPaymentSum(calculateOrderSum(order.getPizzas()));
         orderRepo.save(order);
         log.info("запись о заказе успешно сохранена");
         log.info("редиректим на страницу с текущим заказом");
         return "success";
-    }
-
-    private double calculateOrderSum(List<Pizza> pizzas) {
-        double sum = 0.0;
-        for (Pizza pizza : pizzas) {
-            if (pizza.isActive()) {
-                sum += pizza.getPrice();
-            }
-        }
-        return sum;
     }
 }

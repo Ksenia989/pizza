@@ -22,9 +22,9 @@ public class TaskApplication {
     @Bean
     public CommandLineRunner dataLoader(PizzaRepository repo) {
         return args -> {
-            repo.save(new Pizza("1_pizza", "Салями", 550.0, false));
-            repo.save(new Pizza("2_pizza", "Сырная", 650.0, false));
-            repo.save(new Pizza("3_pizza", "Диетическая", 400.0, false));
+            repo.save(new Pizza(1, "Салями", 550.0));
+            repo.save(new Pizza(2, "Сырная", 650.0));
+            repo.save(new Pizza(3, "Диетическая", 400.0));
         };
     }
 }
