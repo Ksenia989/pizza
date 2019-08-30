@@ -2,6 +2,7 @@ package virtual.pizzeria.task.dto;
 
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
+import virtual.pizzeria.task.changestatus.OrderStatus;
 import virtual.pizzeria.task.dto.payment.PaymentMethod;
 
 import javax.persistence.*;

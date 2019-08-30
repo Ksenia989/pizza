@@ -26,13 +26,16 @@ public class StatisticsController {
     public ResponseEntity getSomeStatistics(@RequestBody StatisticsRequest request) {
         ResponseEntity response;
         StatisticsRequestHandler handler;
-        if (request.getType().equals(TaskType.PIZZA_COUNT.getName())) {
-            handler = new PizzaCountRequestHandler(request.getTimeFrom(), request.getTimeTo(), orderRepository);
-        } else if (request.getType().equals(TaskType.ORDERS_COUNT.getName())) {
-            handler = new OrdersCountRequestHandler(request.getTimeFrom(), request.getTimeTo(), orderRepository);
-        } else {
-            response = new ResponseEntity(HttpStatus.BAD_REQUEST);
-            return response;
+        switch (request.getType()) {
+            case PIZZA_COUNT:
+                handler = new PizzaCountRequestHandler(request.getTimeFrom(), request.getTimeTo(), orderRepository);
+                break;
+            case ORDERS_COUNT:
+                handler = new OrdersCountRequestHandler(request.getTimeFrom(), request.getTimeTo(), orderRepository);
+                break;
+            default:
+                response = new ResponseEntity(HttpStatus.BAD_REQUEST);
+                return response;
         }
         response = handler.handle(request);
         return response;

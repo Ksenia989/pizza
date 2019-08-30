@@ -8,7 +8,7 @@ import java.util.Date;
 @Getter
 @Setter
 public class StatisticsRequest implements Serializable {
-    private String type;
+    private TaskType type;
     private Date timeFrom;
     private Date timeTo;
 }

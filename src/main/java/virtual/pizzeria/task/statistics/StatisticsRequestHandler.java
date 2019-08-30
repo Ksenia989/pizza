@@ -15,7 +15,7 @@ public abstract class StatisticsRequestHandler {
     private Date timeTo;
     private OrderRepository orderRepo;
 
-    abstract ResponseEntity handle(StatisticsRequest request);
+    public abstract ResponseEntity handle(StatisticsRequest request);
 
     public List<Order> getOrdersWithinDateRange() {
         return IteratorUtils.getStreamFromIterator(orderRepo.findAll().iterator()).
