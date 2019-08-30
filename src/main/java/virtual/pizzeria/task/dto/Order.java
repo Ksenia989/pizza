@@ -1,6 +1,7 @@
 package virtual.pizzeria.task.dto;
 
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 import virtual.pizzeria.task.changestatus.OrderStatus;
 import virtual.pizzeria.task.dto.payment.PaymentMethod;
@@ -8,6 +9,7 @@ import virtual.pizzeria.task.dto.payment.PaymentMethod;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -34,12 +36,15 @@ public class Order implements Serializable {
      * пиццы в заказе
      */
     @ManyToMany(targetEntity = Pizza.class)
+    @NotNull
+    @Size(min = 1, message = "В заказе должна быть как минимум одна пицца")
     private List<Pizza> pizzas = new ArrayList<>();
 
     /**
      * время заказа
      */
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    @NotNull
     public LocalDateTime deliveryDate;
 
     /**
@@ -56,12 +61,14 @@ public class Order implements Serializable {
     /**
      * имя заказчика, или того, кому заказывают пиццу
      */
+    @NotBlank(message = "Имя пользователя обязательно")
+    @Length(min = 1, message = "Вы должны указать имя пользователя")
     public String customerName;
-
     /**
      * адрес доставки
      */
     @NotBlank(message = "Адрес доставки обязателен")
+    @Length(min = 1, message = "Вы должны указать адрес доставки")
     public String deliveryAddress;
 
     /**

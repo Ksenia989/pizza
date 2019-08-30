@@ -9,6 +9,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Абстрактный класс обработки статистики
+ */
 @AllArgsConstructor
 public abstract class StatisticsRequestHandler {
     private Date timeFrom;
@@ -17,11 +20,14 @@ public abstract class StatisticsRequestHandler {
 
     public abstract ResponseEntity handle(StatisticsRequest request);
 
+    /**
+     * метод, вычисляющий заказы, находящиеся между присланными датами
+     * @return
+     */
     public List<Order> getOrdersWithinDateRange() {
         return IteratorUtils.getStreamFromIterator(orderRepo.findAll().iterator()).
                 filter(order ->
                         order.getOrderDate().after(timeFrom) && order.getOrderDate().before(timeTo)
-                ).collect(Collectors
-                .toList());
+                ).collect(Collectors.toList());
     }
 }

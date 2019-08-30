@@ -12,12 +12,10 @@ public enum TaskType {
     /**
      * Количество заказанных пицц в определенный период
      */
-    PIZZA_COUNT("pizzacount"),
+    PIZZA_COUNT,
 
     /**
      * Количество заказов в определенный период
      */
-    ORDERS_COUNT("orderscount");
-
-    private final String name;
+    ORDERS_COUNT
 }

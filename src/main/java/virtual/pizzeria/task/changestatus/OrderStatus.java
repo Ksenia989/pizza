@@ -10,10 +10,13 @@ import lombok.Getter;
 @Getter
 public enum OrderStatus {
     RECEIVED("получен"),
-    PREPARING("готовиться"),
+    PREPARING("готовится"),
     READY("готов"),
     DELIVERING("доставляется"),
     DELIVERED("доставлен");
 
+    /**
+     * имя для более удобного отображения
+     */
     private String name;
 }

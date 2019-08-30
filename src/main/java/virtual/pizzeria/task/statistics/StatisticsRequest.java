@@ -5,6 +5,9 @@ import lombok.Setter;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * dto для статистики
+ */
 @Getter
 @Setter
 public class StatisticsRequest implements Serializable {

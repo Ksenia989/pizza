@@ -8,6 +8,9 @@ import virtual.pizzeria.task.dto.Order;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Класс обработки статистики количества заказов за определенный период
+ */
 public class OrdersCountRequestHandler extends StatisticsRequestHandler {
     public OrdersCountRequestHandler(Date timeFrom, Date timeTo, OrderRepository orderRepo) {
         super(timeFrom, timeTo, orderRepo);

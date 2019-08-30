@@ -17,6 +17,10 @@ import virtual.pizzeria.task.db.OrderRepository;
 public class StatisticsController {
     private final OrderRepository orderRepository;
 
+    /**
+     * Внедняем объект бд - заказы
+     * @param orderRepository
+     */
     @Autowired
     StatisticsController(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
@@ -25,6 +29,7 @@ public class StatisticsController {
     @PostMapping
     public ResponseEntity getSomeStatistics(@RequestBody StatisticsRequest request) {
         ResponseEntity response;
+        // интерфейс - обработчик запроса статистики
         StatisticsRequestHandler handler;
         switch (request.getType()) {
             case PIZZA_COUNT:
@@ -34,6 +39,7 @@ public class StatisticsController {
                 handler = new OrdersCountRequestHandler(request.getTimeFrom(), request.getTimeTo(), orderRepository);
                 break;
             default:
+                // если нет такой константы, то плохой запрос
                 response = new ResponseEntity(HttpStatus.BAD_REQUEST);
                 return response;
         }

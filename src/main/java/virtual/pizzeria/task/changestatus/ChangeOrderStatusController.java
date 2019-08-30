@@ -9,11 +9,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import virtual.pizzeria.task.db.OrderRepository;
 import virtual.pizzeria.task.dto.Order;
 
+/**
+ * Класс для обновления статуса заказа
+ */
 @Controller
 @RequestMapping("/changestatus")
 public class ChangeOrderStatusController {
     private final OrderRepository orderRepository;
 
+    /**
+     * Внедряем объект БД
+     * @param orderRepository
+     */
     @Autowired
     ChangeOrderStatusController(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;

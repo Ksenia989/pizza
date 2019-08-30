@@ -5,14 +5,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 /**
- * Обработчик заказа
+ * Обработчик заказа пичек
  */
 @Slf4j
 @Controller
-//@RequestMapping("/")
 public class OrderPizza {
     @GetMapping("/")
     public String orderPizza() {
+        // возвращает домашнюю страницу
         return "home";
     }
 }

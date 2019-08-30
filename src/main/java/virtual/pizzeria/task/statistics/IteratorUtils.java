@@ -6,6 +6,9 @@ import java.util.Spliterators;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
+/**
+ * преобразование итератора в стрим. Для удобной навигации и фильтрации
+ */
 public class IteratorUtils {
     // Function to get the Stream
     public static <T> Stream<T>

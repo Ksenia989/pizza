@@ -15,6 +15,7 @@ import virtual.pizzeria.task.dto.Order;
 import virtual.pizzeria.task.dto.Pizza;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Slf4j
@@ -43,9 +44,6 @@ public class OrderPizzaController {
 
     @GetMapping
     public String showDesignForm(Model model) {
-        // заполняем данными из БД
-        List<Pizza> pizzas = new ArrayList<>();
-        pizzaRepo.findAll().forEach(pizzas::add);
         return "design";
     }
 
@@ -54,7 +52,7 @@ public class OrderPizzaController {
      */
     @PostMapping
     public String processOrder(@ModelAttribute Order order, Errors errors) {
-        // если есть ошибки, возвращаемся на первоначальную форму
+        // если есть ошибки в order, возвращаемся на первоначальную форму
         if (errors.hasErrors()) {
             return "design";
         }

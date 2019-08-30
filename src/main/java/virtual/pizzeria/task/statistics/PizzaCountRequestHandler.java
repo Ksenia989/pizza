@@ -22,7 +22,7 @@ public class PizzaCountRequestHandler extends StatisticsRequestHandler {
         int pizzaCount = 0;
         for (Order order : orderStream) {
             pizzaCount += order.getPizzas().size();
-        }
+        }// todo lambda or stream
         return ResponseEntity.status(HttpStatus.OK).body("Было заказано " + pizzaCount + " пицц(ы)");
     }
 }
