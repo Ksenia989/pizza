@@ -9,10 +9,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import virtual.pizzeria.task.db.OrderRepository;
+import virtual.pizzeria.task.db.PizzaRepository;
 import virtual.pizzeria.task.dto.Order;
 import virtual.pizzeria.task.dto.Pizza;
 
-import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +22,7 @@ import java.util.List;
 @RequestMapping("/design")
 public class OrderPizzaController {
     // внедренный интерфейс
+    private OrderRepository orderRepo;
     private PizzaRepository pizzaRepo;
 
     @ModelAttribute(name = "design")
@@ -33,9 +35,10 @@ public class OrderPizzaController {
     }
 
     @Autowired
-    public OrderPizzaController(
-            PizzaRepository pizzaRepo) {
+    public OrderPizzaController(PizzaRepository pizzaRepo,
+                                OrderRepository orderRepo) {
         this.pizzaRepo = pizzaRepo;
+        this.orderRepo = orderRepo;
     }
 
     @GetMapping
@@ -46,17 +49,30 @@ public class OrderPizzaController {
         return "design";
     }
 
+    /**
+     * Метод при возвращении объекта заказа
+     */
     @PostMapping
-    public String processOrder(
-                               @ModelAttribute Order order, Errors errors) {
+    public String processOrder(@ModelAttribute Order order, Errors errors) {
         // если есть ошибки, возвращаемся на первоначальную форму
         if (errors.hasErrors()) {
             return "design";
         }
-//        Pizza saved = pizzaRepo.save(pizza);
-//        order.addPizza(saved);
-
+        // сохраняем объект заказа в БД
+        order.setPaymentSum(calculateOrderSum(order.getPizzas()));
+        orderRepo.save(order);
+        log.info("запись о заказе успешно сохранена");
         log.info("редиректим на страницу с текущим заказом");
-        return "redirect:/orders/current";
+        return "success";
+    }
+
+    private double calculateOrderSum(List<Pizza> pizzas) {
+        double sum = 0.0;
+        for (Pizza pizza : pizzas) {
+            if (pizza.isActive()) {
+                sum += pizza.getPrice();
+            }
+        }
+        return sum;
     }
 }

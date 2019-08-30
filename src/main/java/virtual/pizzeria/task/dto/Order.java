@@ -6,11 +6,10 @@ import virtual.pizzeria.task.dto.payment.PaymentMethod;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -18,7 +17,7 @@ import java.util.List;
  * Класс для данных о заказе (с фронта)
  */
 @Data
-@Table(name = "order")
+@Table(name = "orders")
 @Entity
 public class Order implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -40,9 +39,14 @@ public class Order implements Serializable {
     public LocalDateTime deliveryDate;
 
     /**
+     * Сумма заказа
+     */
+    public double paymentSum;
+
+    /**
      * время и дата доставки
      */
-//    @NotBlank(message = "Выбор даты и времени доставки обязателен")
+    @NotNull(message = "Выбор даты и времени доставки обязателен")
     public Date orderDate;
 
     /**
@@ -53,13 +57,13 @@ public class Order implements Serializable {
     /**
      * адрес доставки
      */
-//    @NotBlank(message = "Адрес доставки обязателен")
+    @NotBlank(message = "Адрес доставки обязателен")
     public String deliveryAddress;
 
     /**
      * метод оплаты - CASH и BANK_CARD и BANK_ONLINE_PAYMENT
      */
-//    @NotBlank(message = "Указание метода оплаты обязательно")
+    @NotNull(message = "Выбор метода оплаты обязателен")
     public PaymentMethod selectedPaymentMethod;
 
     public void addPizza(Pizza pizza) {
