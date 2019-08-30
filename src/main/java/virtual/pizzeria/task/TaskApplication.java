@@ -7,6 +7,9 @@ import org.springframework.context.annotation.Bean;
 import virtual.pizzeria.task.db.PizzaRepository;
 import virtual.pizzeria.task.dto.Pizza;
 
+/**
+ * entry point приложения
+ */
 @SpringBootApplication
 public class TaskApplication {
     public static void main(String[] args) {
