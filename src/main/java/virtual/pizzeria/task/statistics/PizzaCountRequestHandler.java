@@ -21,10 +21,8 @@ public class PizzaCountRequestHandler extends StatisticsRequestHandler {
     @Override
     public ResponseEntity handle(StatisticsRequest request) {
         List<Order> orderStream = getOrdersWithinDateRange();
-        int pizzaCount = 0;
-        for (Order order : orderStream) {
-            pizzaCount += order.getPizzaCount();
-        }// todo lambda or stream
+        int pizzaCount;
+        pizzaCount = orderStream.stream().map(Order::getCountPizzas).reduce(Integer::sum).get();
         log.info("Запрос количества проданных пицц за период");
         return ResponseEntity.status(HttpStatus.OK).body("В период c " + super.getTimeFrom().toString() + " по " + super
                 .getTimeTo().toString() + "\nБыло заказано " + pizzaCount + " пицц(ы)");
