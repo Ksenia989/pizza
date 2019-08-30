@@ -1,4 +1,4 @@
-package virtual.pizzeria.task;
+package virtual.pizzeria.task.web;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
@@ -15,6 +15,7 @@ import virtual.pizzeria.task.db.PizzaRepository;
 import virtual.pizzeria.task.dto.Order;
 import virtual.pizzeria.task.dto.Pizza;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -52,9 +53,8 @@ public class OrderPizzaController {
      * Метод при возвращении объекта заказа
      */
     @PostMapping
-    public String processOrder(@ModelAttribute Order order,
-                               long[] ids,
-                               Errors errors) {
+    public String processOrder(@ModelAttribute @Valid Order order, Errors errors,
+                               long[] ids) {
         // если есть ошибки в order, возвращаемся на первоначальную форму
         if (errors.hasErrors()) {
             log.warn("Есть ошибки на форме. Редирект обратно на нее");

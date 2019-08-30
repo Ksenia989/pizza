@@ -1,7 +1,6 @@
 package virtual.pizzeria.task.dto;
 
 import lombok.Data;
-import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 import virtual.pizzeria.task.changestatus.OrderStatus;
 import virtual.pizzeria.task.dto.payment.PaymentMethod;
@@ -62,14 +61,12 @@ public class Order implements Serializable {
      * имя заказчика, или того, кому заказывают пиццу
      */
     @NotBlank(message = "Имя пользователя обязательно")
-    @Length(min = 1, message = "Вы должны указать имя пользователя")
     public String customerName;
 
     /**
      * адрес доставки
      */
     @NotBlank(message = "Адрес доставки обязателен")
-    @Length(min = 1, message = "Вы должны указать адрес доставки")
     public String deliveryAddress;
 
     /**

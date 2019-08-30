@@ -2,7 +2,6 @@ package virtual.pizzeria.task.statistics;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,7 +31,7 @@ public class StatisticsController {
     public ResponseEntity getSomeStatistics(@RequestBody StatisticsRequest request) {
         ResponseEntity response;
         // интерфейс - обработчик запроса статистики
-        StatisticsRequestHandler handler;
+        StatisticsRequestHandler handler = null;
         log.info("Получение статистики (количество пицц или заказов)");
         switch (request.getType()) {
             case PIZZA_COUNT:
@@ -43,10 +42,6 @@ public class StatisticsController {
                 log.info("Запрос статистики на количество заказов");
                 handler = new OrdersCountRequestHandler(request.getTimeFrom(), request.getTimeTo(), orderRepository);
                 break;
-            default:
-                // если нет такой константы, то плохой запрос
-                response = new ResponseEntity(HttpStatus.BAD_REQUEST);
-                return response;
         }
         response = handler.handle(request);
         return response;
