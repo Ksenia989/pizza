@@ -15,7 +15,6 @@ import virtual.pizzeria.task.dto.Order;
 import virtual.pizzeria.task.dto.Pizza;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Slf4j
@@ -54,6 +53,7 @@ public class OrderPizzaController {
     public String processOrder(@ModelAttribute Order order, Errors errors) {
         // если есть ошибки в order, возвращаемся на первоначальную форму
         if (errors.hasErrors()) {
+            log.warn("Есть ошибки на форме. Редирект обратно на нее");
             return "design";
         }
         // сохраняем объект заказа в БД
