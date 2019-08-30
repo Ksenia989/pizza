@@ -22,6 +22,9 @@ import java.util.List;
 public class Order implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    /**
+     * автогенерируемый id
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -66,12 +69,21 @@ public class Order implements Serializable {
     @NotNull(message = "Выбор метода оплаты обязателен")
     public PaymentMethod selectedPaymentMethod;
 
+    /**
+     * статус заказа. Изначально - получен
+     */
+    public OrderStatus status;
+
     public void addPizza(Pizza pizza) {
         this.pizzas.add(pizza);
     }
 
+    /**
+     * перед отправкой в БД записываем текущее время
+     */
     @PrePersist
     void placedAt() {
         this.orderDate = new Date();
+        this.status = OrderStatus.RECEIVED;
     }
 }
